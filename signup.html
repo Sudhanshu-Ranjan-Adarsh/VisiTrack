@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+        <div class="signup-container">
+                <div class="logo-section top-logo">
+                    <img src="images/Full.png" alt="VisiTrack Logo">
+                </div>
+
+            <div class="signup-card">
+                    <h2>Teacher Sign Up</h2>
+                    <p>Fill all fields below to create your account.</p>
+                    <form action="/register" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="profile-pic-section">
+                            <div class="circle-preview" onclick="document.getElementById('profile-input').click();">
+                                <img src="images/User.png" id="profile-display">
+                                <div class="camera-overlay"><i class="fa-solid fa-camera"></i></div>
+                            </div>
+                            <input type="file" id="profile-input" name="profile_img" accept="image/*" onchange="previewProfile(event)" hidden>
+                            <small>Tap to upload photo</small>
+                        </div>
+
+                        <div class="section-title">Personal Information</div>
+                        
+                        <div class="input-row">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="name" placeholder=" Your Name" required>
+                        </div>
+                        
+                        <div class="input-row">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" name="email" placeholder=" Your Email ID" id="user-email" required>
+                            <button type="button" class="btn-send" onclick="sendOTP()">SEND</button>
+                        </div>
+
+                        <div class="input-row phone-row">
+                            <i class="fa-solid fa-phone"></i>
+                            <div class="phone-group-container">
+                                <select name="country-code" class="code-dropdown">
+                                    <option>+91</option>
+                                    <option>+1</option>
+                                    <option>+44</option>
+                                    <option>+1</option>
+                                    <option>+61</option>
+                                    <option>+49</option>
+                                    <option>+33</option>
+                                    <option>+86</option>
+                                </select>
+                                <input type="text" name="number" placeholder=" Your Phone Number" required>
+                            </div>
+                        </div>
+
+                        <div class="section-title">Professional Information</div>
+
+                        <div class="input-row">
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="text" name="tid" placeholder="TID *** (Class-wise)">
+                        </div>
+
+                        <div class="input-row">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <select name="department">
+                                <option value="" disabled selected>Department</option>
+                                <option>Computer Engg.</option>
+                                <option>Mechanical Engg.</option>
+                                <option>Automobile Engg.</option>
+                                <option>Civil Engg.</option>
+                                <option>Chemical Engg.</option>
+                                <option>Electrical Engg.</option>
+                                <option>Electronics Engg.</option>
+                                <option>Ins. and Cont. Engg.</option>
+                                <option>Textile Engg.</option>
+                                <option>Finance Accounting and Auditing</option>
+                            </select>
+                        </div>
+
+                        <div class="input-row password-send">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" placeholder=" Your Password" required>
+                        </div>
+                        <div class="input-row password-send">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" placeholder=" Confirm Password" required>
+                        </div>
+
+                        <div class="input-row otp-verify">
+                            <i class="fa-solid fa-key"></i>
+                            <input type="text" name="otp" placeholder="OTP . . . . . .">
+                            <button type="button" class="btn-verify">Verify</button>
+                        </div>
+
+                        <button type="submit" class="register-btn">REGISTER</button>
+
+                        <div class="signup-footer">
+                            Already have an account? <a href="login.html">Login</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
+
+
+
+<script>
+    // Image box par click karne par file selector khulega
+        document.getElementById('imagePreview').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+
+        // Image ka preview dikhane ke liye
+        function previewFile() {
+            const preview = document.getElementById('profileDisplay');
+            const file = document.getElementById('fileInput').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "default-avatar.png";
+            }
+        }
+</script>
+</body>
+</html>
