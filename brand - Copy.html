@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Assets | Design Identity</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="brand-page">
+
+    <header class="brand-nav">
+        <div class="brand-nav-container">
+            <img src="{{url_for('static', filename='images/Full.png')}}" alt="Logo" class="mini-logo">
+            <a href="{{ url_for('home') }}" class="exit-link">Back to Ecosystem</a>
+        </div>
+    </header>
+
+    <main class="brand-wrapper">
+        <section class="brand-intro">
+            <h1>Our Brand <span>Identity</span></h1>
+            <p>Download our official assets and learn about our visual language.</p>
+        </section>
+
+        <div class="asset-section">
+            <div class="section-label">01. Official Logo</div>
+            <div class="logo-display-card">
+                <img src="{{url_for('static', filename='images/Full.png')}}" alt="Main Logo" class="main-display-logo">
+                <div class="logo-info">
+                    <h3>Full.png</h3>
+                    <p>Primary logo for all digital and print media.</p>
+                    <a href="{{url_for('static', filename='images/Full.png')}}" download class="dl-btn"><i class="fas fa-download"></i> Download PNG</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <div class="section-label">02. Color Palette</div>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #083480;"></div>
+                    <div class="color-meta">
+                        <span class="color-name">Primary Blue</span>
+                        <span class="color-hex">#083480</span>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #f5870a;"></div>
+                    <div class="color-meta">
+                        <span class="color-name">Brand Orange</span>
+                        <span class="color-hex">#f5870a</span>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #333333;"></div>
+                    <div class="color-meta">
+                        <span class="color-name">Deep Charcoal</span>
+                        <span class="color-hex">#333333</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <div class="section-label">03. Typography</div>
+            <div class="typo-card">
+                <div class="typo-sample">
+                    <span class="font-tag">Poppins Bold</span>
+                    <h2>ABCDEFGHIJKLMN</h2>
+                    <p>The quick brown fox jumps over the lazy dog.</p>
+                </div>
+                <div class="typo-details">
+                    <p>We use <strong>Poppins</strong> for its modern, clean, and geometric feel. It ensures readability across all devices.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="brand-footer">
+        <p>Copyright © 2026 | All Brand Rights Reserved.</p>
+    </footer>
+
+</body>
+</html
