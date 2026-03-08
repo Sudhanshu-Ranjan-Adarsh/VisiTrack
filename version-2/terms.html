@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions | Professional Product</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="terms-page-body">
+
+    <header class="terms-navbar">
+        <div class="terms-logo-container">
+            <img src="{{ url_for('static', filename = 'images/Full.png') }}" alt="Company Logo" class="brand-logo">
+        </div>
+        <div class="back-home">
+            <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </header>
+
+    <main class="terms-wrapper">
+        <div class="terms-intro">
+            <h1>Terms of <span>Service</span></h1>
+            <p>Effective Date: March 07, 2026</p>
+            <div class="intro-line"></div>
+        </div>
+
+        <div class="terms-content-card">
+            
+            <section class="policy-section">
+                <h3>1. Agreement to Terms</h3>
+                <p>By using our product, you agree to be bound by these Terms and Conditions. If you do not agree, please stop using the services immediately.</p>
+            </section>
+
+            <section class="policy-section">
+                <h3>2. Intellectual Property</h3>
+                <p>All content, including the <strong>Full.png</strong> logo and software code, is the exclusive property of our company. You may not:</p>
+                <ul class="pro-list">
+                    <li><i class="fas fa-circle-xmark"></i> Reproduce or redistribute any brand assets.</li>
+                    <li><i class="fas fa-circle-xmark"></i> Use our product for any illegal activities.</li>
+                    <li><i class="fas fa-circle-xmark"></i> Modify, decompile, or reverse engineer the software.</li>
+                </ul>
+            </section>
+
+            <section class="policy-section">
+                <h3>3. User Privacy</h3>
+                <p>Your privacy is important to us. Please review our <a href="#" class="inline-link">Privacy Policy</a> to understand how we collect and use your data.</p>
+                <div class="note-box">
+                    <strong>Note:</strong> We never sell your personal data to third-party advertisers.
+                </div>
+            </section>
+
+            <section class="policy-section">
+                <h3>4. Limitation of Liability</h3>
+                <p>In no event shall the company be liable for any indirect, incidental, or consequential damages arising out of your use of the service.</p>
+            </section>
+
+            <footer class="terms-action-footer">
+                <button class="accept-btn">I Have Read & Agree</button>
+                <p>Questions? Contact us at <a href="mailto:support@example.com">support@example.com</a></p>
+            </footer>
+        </div>
+    </main>
+
+</body>
+</html>
