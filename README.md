@@ -10,7 +10,7 @@ VisiTrack is a web- based system designed to manages and track students attendan
 - Pythob based backend testing modules
 
 ## Versions:-
-  * Versiob-1:- Older version, earlier code
+  * Version-1:- Older version, earlier code
   * Version-2:- Modern version, upgraded code
 
 ## Build With:-
