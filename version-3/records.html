@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Records Page | VisiTrack</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mobile-nav-toggle" id="menuOpen">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <!-- ----------SIDEBAR SECTION----------------- -->
+    
+        <div class="sidebar" id="sidebar">
+            <div class="mobile-sidebar-header">
+                <div class="menu-close" id="menuClose">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                
+                <div class="sidebar-logo-center">
+                   <img src="{{ url_for('static', filename='images/Full.png') }}" alt="VisiTrack">
+                </div>
+
+                <div class="sidebar-profile-row">
+                    <span class="admin-label">Admin</span>
+                    <div class="sidebar-user-avatar">
+                        <img src="{{ url_for('static', filename='profiles/' + user.profile_img)
+                         if user.profile_img else url_for('static', filename='images/Logo.png') }}" alt="User">
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+            </div>
+        <div class="logo"></div>
+        <ul class="menu">
+            <li class="{{ 'active' if request.endpoint == 'home'}}">
+                <a href="{{ url_for('home')}}">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'analysis'}}">
+                <a href="{{ url_for('analysis')}}">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <span>View Analysis</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'records'}}">
+                <a href="{{ url_for('records')}}">
+                    <i class="fa-brands fa-black-tie"></i>
+                    <span>Track-Record</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'attendance'}}">
+                <a href="{{ url_for('attendance')}}">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Mark Attendance</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'gallery'}}">
+                <a href="{{ url_for('gallery') }}">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="setting {{ 'active' if request.endpoint == 'setting'}}" >
+                <a href="{{ url_for('setting')}}">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+<!------------MAin CONTENT-------->
+    <div class="main-content">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/Full.png') }}" alt="Logo" class="logo-img">
+            
+        </div>
+        <div class="link">
+                    <ul>
+                        <li><a href="">Admin</a></li>
+                        <div class="profile-container">
+                            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="User" class="user-profile " id="profileTrigger">
+                            <div class="user-card" id="userCard">
+                                <div class="social-icons">
+                                    <a href="{{ user.facebook_url}}"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="{{ user.twitter_url}}"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="{{ user.instagram_url}}"><i class="fa-brands fa-instagram"></i></a>
+                                </div>
+                                <div class="card-img-wrapper">
+                                    <img src="{{ url_for('static', filename='profiles/' + user.profile_img) }}" alt="User">
+                                </div>
+                                <h3>{{ user.name }}</h3>
+                                <p class="location">{{ user.office_address }}</p>
+                                <p class="desc">{{ user.description }}</p>
+                                <div class="card-footer">
+                                    <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+    </header>
+
+    <div class="analysis-container">
+        <h1 class="page-title">Attendance Table</h1>
+        
+        <div class="analysis-layout">
+            <div class="table-section" id="report-content">
+                <div class="pdf-only-header" style="display: none;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="{{ url_for('static', filename='images/Full.png') }}" style="width: 200px;">
+                        <h1 style="color: #f5870a; margin: 10px 0;">Attendance Track Report</h1>
+                        <p style="font-size: 14px; color: #666;">Generated by: {{ user.name }} | Date: {{ today_date }}</p>
+                        <hr style="border: 1px solid #eee; margin: 20px 0;">
+                    </div>
+                </div>
+                            <div class="table-header">
+                    <h3>Total Students Records</h3>
+                    <div class="date-selector">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>{{ today_date }}</span>
+                    </div>
+                </div>
+                <div class="scrollable-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student ID</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Roll No</th>
+                                <th>Department</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in all_records %}
+                            <tr>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.tid }}</td>
+                                <td>{{ student.time }}</td>
+                                <td><span class="status {{ student.status.lower() }}">{{ student.status }}</span></td>
+                                <td>{{ student.roll_no }}</td>
+                                <td>{{ student.dept }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="pdf-only-footer" style="display: none; margin-top: 50px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <p>________</p>
+                            <p>Authorized Signature</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p>© 2026 VisiTrack System</p>
+                            <p>Security & Trust</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="side-analysis">
+                <div class="chart-box card">
+                    <h3>Date-wise Analysis</h3>
+                    <canvas id="detailedBarChart"></canvas>
+                </div>
+                
+                <button class="btn-generate" onclick="generatePDF()">
+                    <i class="fa-solid fa-file-pdf"></i> Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Detailed Bar Chart Logic
+    const ctx = document.getElementById('detailedBarChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                label: 'Attendance Data',
+                data: [{{ present_count }}, {{ absent_count }}],
+                backgroundColor: ['#34a853', '#ea4335'],
+                borderRadius: 5
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // One-Click PDF Generation Function
+    function generatePDF() {
+    const element = document.getElementById('report-content');
+    
+    // PDF generate karne se pehle hidden elements ko temporary dikhana
+    const hiddenHeader = element.querySelector('.pdf-only-header');
+    const hiddenFooter = element.querySelector('.pdf-only-footer');
+    hiddenHeader.style.display = 'block';
+    hiddenFooter.style.display = 'block';
+
+    const opt = {
+        margin:       [10, 10, 20, 10], // top, left, bottom, right
+        filename:     'VisiTrack_Report_{{ today_date }}.pdf',
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { 
+            scale: 3, 
+            useCORS: true, 
+            letterRendering: true 
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Download ke baad wapas hide kar dena taaki screen kharab na dikhe
+        hiddenHeader.style.display = 'none';
+        hiddenFooter.style.display = 'none';
+    });
+}
+</script>
+
+<!-- javascript for user profile -->
+        <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const profileImg = document.getElementById('profileTrigger');
+                const userCard = document.getElementById('userCard');
+
+                // Toggle card on image click
+                profileImg.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userCard.classList.toggle('active');
+                });
+
+                // Close card if clicked anywhere else
+                document.addEventListener('click', function(e) {
+                    if (!userCard.contains(e.target) && e.target !== profileImg) {
+                        userCard.classList.remove('active');
+                    }
+                });
+            });
+        </script>
+
+        <!----JavaScript for media queries-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebar = document.getElementById('sidebar');
+                const menuOpen = document.getElementById('menuOpen');
+                const menuClose = document.getElementById('menuClose');
+
+                // Sidebar kholne ke liye
+                if(menuOpen) {
+                    menuOpen.addEventListener('click', () => {
+                        sidebar.classList.add('active');
+                    });
+                }
+
+                // Sidebar band karne ke liye
+                if(menuClose) {
+                    menuClose.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                }
+
+                // Sidebar ke bahar click karne par auto-close
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 1024) {
+                        if (!sidebar.contains(e.target) && !menuOpen.contains(e.target)) {
+                            sidebar.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+        <div class="signup-container">
+                <div class="logo-section top-logo">
+                    <img src="{{url_for('static', filename='images/Full.png')}}" alt="VisiTrack Logo">
+                </div>
+
+            <div class="signup-card">
+                    <h2>Teacher Sign Up</h2>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div style="padding: 10px; 
+                                margin-bottom: 10px; 
+                                border-radius: 5px; 
+                                text-align: center; 
+                                font-size: 0.9rem; 
+                                ">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+                    <p>Fill all fields below to create your account.</p>
+                    <form action="/signup" method="POST" enctype="multipart/form-data">
+                        
+
+                        <div class="section-title">Personal Information</div>
+                        
+                        <div class="input-row">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="name" placeholder=" Your Name" required>
+                        </div>
+                        
+                        <div class="input-row">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" name="email" placeholder=" Your Email ID" id="user-email" required>
+                            <button type="button" class="btn-send" onclick="sendOTP()">SEND</button>
+                        </div>
+
+                        <div class="input-row phone-row">
+                            <i class="fa-solid fa-phone"></i>
+                            <div class="phone-group-container">
+                                <select name="country-code" class="code-dropdown">
+                                    <option>+91</option>
+                                    <option>+1</option>
+                                    <option>+44</option>
+                                    <option>+1</option>
+                                    <option>+61</option>
+                                    <option>+49</option>
+                                    <option>+33</option>
+                                    <option>+86</option>
+                                </select>
+                                <input type="text" name="number" placeholder=" Your Phone Number" required>
+                            </div>
+                        </div>
+
+                        <div class="section-title">Professional Information</div>
+
+                        
+
+                        <div class="input-row">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <select name="department">
+                                <option value="" disabled selected>Department</option>
+                                <option>Computer Engg.</option>
+                                <option>Mechanical Engg.</option>
+                                <option>Automobile Engg.</option>
+                                <option>Civil Engg.</option>
+                                <option>Chemical Engg.</option>
+                                <option>Electrical Engg.</option>
+                                <option>Electronics Engg.</option>
+                                <option>Ins. and Cont. Engg.</option>
+                                <option>Textile Engg.</option>
+                                <option>Finance Accounting and Auditing</option>
+                            </select>
+                        </div>
+
+                        <div class="input-row password-send">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id= "password" placeholder=" Your Password" required>
+                            <span style="position: absolute; right: 10px; top: 10px; cursor: pointer;" onclick="togglePassword('password', 'eyeIcon1')">
+                                <i class="fa-solid fa-eye" id= 'eyeIcon1'></i> 
+                            </span>
+                        </div>
+                        <div class="input-row password-send">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="confirm_password" placeholder=" Confirm Password" required>
+                            <span style="position: absolute; right: 10px; top: 10px; cursor: pointer;" onclick="togglePassword('confirm_password', 'eyeIcon2')">
+                                <i class="fa-solid fa-eye" id="eyeIcon2"></i>
+                            </span>
+                        </div>
+
+                        <div class="input-row otp-verify">
+                            <i class="fa-solid fa-key"></i>
+                            <input type="text" name="otp" placeholder="OTP . . . . . .">
+                            <button type="button" class="btn-verify">Verify</button>
+                        </div>
+
+                        <button type="submit" class="register-btn">REGISTER</button>
+
+                        <div class="signup-footer">
+                            Already have an account? <a href="{{ url_for('login') }}">Login</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
+
+
+<!-------------Javascriptfot otp------------------>
+        <script>
+                 let timer;
+
+                function sendOTP() {
+                    const email = document.getElementById('user-email').value;
+                    const btnSend = document.querySelector('.btn-send');
+
+                    if (!email) {
+                        alert("Please enter email first");
+                        return;
+                    }
+
+                    fetch('/send_otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.message === "OTP Sent Successfully!") {
+                            startTimer(40); // 40 seconds timer start
+                            btnSend.disabled = true;
+                        }
+                    });
+                }
+
+                function startTimer(seconds) {
+                    let timeLeft = seconds;
+                    const btnSend = document.querySelector('.btn-send');
+                    
+                    clearInterval(timer);
+                    timer = setInterval(() => {
+                        if (timeLeft <= 0) {
+                            clearInterval(timer);
+                            btnSend.innerText = "RESEND";
+                            btnSend.disabled = false;
+                        } else {
+                            btnSend.innerText = timeLeft + "s";
+                            timeLeft--;
+                        }
+                    }, 1000);
+                }
+
+                // Verify Button Logic
+                document.querySelector('.btn-verify').onclick = function() {
+                    const otp = document.getElementsByName('otp')[0].value;
+
+                    fetch('/verify_otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ otp: otp })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.message === "Verified Successfully!") {
+                            document.querySelector('.otp-verify').style.backgroundColor = "#d4edda"; // Green success
+                        }
+                    });
+                };
+
+        </script>
+
+        <!-------------Javascript for eye icon------------------>
+            <script>
+                function togglePassword(fieldId, iconId) {
+                    const passwordField = document.getElementById(fieldId);
+                    const eyeIcon = document.getElementById(iconId);
+                    
+                    if (passwordField.type === "password") {
+                        passwordField.type = "text"; // Dots hata kar text dikhayega
+                        eyeIcon.classList.remove("fa-eye");
+                        eyeIcon.classList.add("fa-eye-slash"); // Icon change ho jayega
+                    } else {
+                        passwordField.type = "password"; // Wapas dot kar dega
+                        eyeIcon.classList.remove("fa-eye-slash");
+                        eyeIcon.classList.add("fa-eye");
+                    }
+
+                }
+                function validatePasswords() {
+                    const pw = document.getElementById('password').value;
+                    const cpw = document.getElementById('confirm_password').value;
+
+                    if (pw !== cpw) {
+                        alert("Password and Confirm Password do not match!");
+                        return false; // No Form submit
+                    }
+                    return true; // Yes Form submit
+                }
+            </script>
+        
+</body>
+</html>

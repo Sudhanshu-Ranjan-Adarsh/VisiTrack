@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Analysis Page | VisiTrack</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mobile-nav-toggle" id="menuOpen">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <!-- ----------SIDEBAR SECTION----------------- -->
+    
+    <div class="sidebar" id="sidebar">
+        <div class="mobile-sidebar-header">
+            <div class="menu-close" id="menuClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            
+            <div class="sidebar-logo-center">
+                <img src="{{ url_for('static', filename='images/Full.png') }}" alt="VisiTrack">
+            </div>
+
+            <div class="sidebar-profile-row">
+                <span class="admin-label">Admin</span>
+                <div class="sidebar-user-avatar">
+                    <img src="{{ url_for('static', filename='profiles/' + user.profile_img)
+                     if user.profile_img else url_for('static', filename='images/Logo.png') }}" alt="User">
+                </div>
+            </div>
+            <hr class="sidebar-divider">
+        </div>
+        <div class="logo"></div>
+        <ul class="menu">
+            <li class="{{ 'active' if request.endpoint == 'home'}}">
+                <a href="{{ url_for('home')}}">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'analysis'}}">
+                <a href="{{ url_for('analysis')}}">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <span>View Analysis</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'records'}}">
+                <a href="{{ url_for('records')}}">
+                    <i class="fa-brands fa-black-tie"></i>
+                    <span>Track-Record</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'attendance'}}">
+                <a href="{{ url_for('attendance')}}">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Mark Attendance</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'gallery'}}">
+                <a href="{{ url_for('gallery') }}">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="setting {{ 'active' if request.endpoint == 'setting'}}" >
+                <a href="{{ url_for('setting')}}">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!------------MAIN CNTENT------------>
+    <div class="main-content">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/Full.png') }}" alt="Logo" class="logo-img">
+            
+        </div>
+        <div class="header-right">
+            <div class="link">
+                    <ul>
+                        <li><a href="">Admin</a></li>
+                        <div class="profile-container">
+                            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="User" class="user-profile " id="profileTrigger">
+                            <div class="user-card" id="userCard">
+                                <div class="social-icons">
+                                    <a href="{{ user.facebook_url}}"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="{{ user.twitter_url}}"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="{{ user.instagram_url}}"><i class="fa-brands fa-instagram"></i></a>
+                                </div>
+                                <div class="card-img-wrapper">
+                                    <img src="{{ url_for('static', filename='profiles/' + user.profile_img) }}" alt="User">
+                                </div>
+                                <h3>{{ user.name }}</h3>
+                                <p class="location">{{ user.office_address }}</p>
+                                <p class="desc">{{ user.description }}</p>
+                                <div class="card-footer">
+                                    <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fa-solid fa-users"></i>
+            <div>
+                <h3>Total Students</h3>
+                <p class="count">{{ total_students }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-user-check"></i>
+            <div>
+                <h3>Today's Present</h3>
+                <p class="count">{{ today_present }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-chart-pie"></i>
+            <div>
+                <h3>Analysis</h3>
+                <p class="count">{{ attendance_percentage }}%</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-body">
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <a href="{{ url_for('setting') }}" class="btn-link">Setting</a>
+            <a href="{{ url_for('analysis') }}" class="btn-link">View Attendance</a>
+            <a href="{{ url_for('attendance') }}" class="btn-link">Mark Attendance</a>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-box">
+                <h4>Attendance Overview <span class="date-picker">{{ today_date }}</span></h4>
+                <canvas id="attendanceBarChart"></canvas>
+            </div>
+            <div class="chart-box mini">
+                <h4>Status Ratio</h4>
+                <canvas id="statusPieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="recent-activities">
+            <h4>Recent Activities</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in recent_records %}
+                    <tr>
+                        <td>{{ record.name }}</td>
+                        <td>{{ record.student_id }}</td>
+                        <td><span class="status {{ record.status.lower() }}">{{ record.status }}</span></td>
+                        <td>{{ record.time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+     </div>
+    </div>
+
+
+<!---<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. Charts Initialization ---
+        const barCtx = document.getElementById('attendanceBarChart');
+        if (barCtx) {
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Present', 'Absent'],
+                    datasets: [{
+                        label: 'Today\'s Attendance',
+                        data: [{{ today_present }}, {{ today_absent }}],
+                        backgroundColor: ['#34a853', '#ea4335']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        const pieCtx = document.getElementById('statusPieChart');
+        if (pieCtx) {
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Present', 'Absent'],
+                    datasets: [{
+                        data: [{{ today_present }}, {{ today_absent }}],
+                        backgroundColor: ['#34a853', '#ea4335']
+                    }]
+                }
+            });
+        }
+     });
+</script>
+
+<!-- javascript for user profile -->
+        <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const profileImg = document.getElementById('profileTrigger');
+                const userCard = document.getElementById('userCard');
+
+                // Toggle card on image click
+                profileImg.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userCard.classList.toggle('active');
+                });
+
+                // Close card if clicked anywhere else
+                document.addEventListener('click', function(e) {
+                    if (!userCard.contains(e.target) && e.target !== profileImg) {
+                        userCard.classList.remove('active');
+                    }
+                });
+            });
+        </script>
+
+        <!----JavaScript for media queries-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebar = document.getElementById('sidebar');
+                const menuOpen = document.getElementById('menuOpen');
+                const menuClose = document.getElementById('menuClose');
+
+                // Sidebar kholne ke liye
+                if(menuOpen) {
+                    menuOpen.addEventListener('click', () => {
+                        sidebar.classList.add('active');
+                    });
+                }
+
+                // Sidebar band karne ke liye
+                if(menuClose) {
+                    menuClose.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                }
+
+                // Sidebar ke bahar click karne par auto-close
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 1024) {
+                        if (!sidebar.contains(e.target) && !menuOpen.contains(e.target)) {
+                            sidebar.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Page- VisiTrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mobile-nav-toggle" id="menuOpen">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- ----------SIDEBAR SECTION----------------- -->
+    
+    <div class="sidebar" id="sidebar">
+        <div class="mobile-sidebar-header">
+            <div class="menu-close" id="menuClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            
+            <div class="sidebar-logo-center">
+                <img src="{{ url_for('static', filename='images/Full.png') }}" alt="VisiTrack">
+            </div>
+
+            <div class="sidebar-profile-row">
+                <span class="admin-label">Admin</span>
+                <div class="sidebar-user-avatar">
+                    <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="User">
+                </div>
+            </div>
+            <hr class="sidebar-divider">
+        </div>
+        <div class="logo"></div>
+        <ul class="menu">
+            <li class="{{ 'active' if request.endpoint == 'home'}}">
+                <a href="{{ url_for('home')}}">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'analysis'}}">
+                <a href="{{ url_for('analysis')}}">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <span>View Analysis</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'records'}}">
+                <a href="{{ url_for('records')}}">
+                    <i class="fa-brands fa-black-tie"></i>
+                    <span>Track-Record</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'attendance'}}">
+                <a href="{{ url_for('attendance')}}">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Mark Attendance</span>
+                </a>
+            </li>
+            <li class="{{ 'active' if request.endpoint == 'gallery'}}">
+                <a href="{{ url_for('gallery') }}">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+            <li class="setting {{ 'active' if request.endpoint == 'setting'}}" >
+                <a href="{{ url_for('setting')}}">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ----------MAIN CONTENT SECTION----------------- -->
+    <div class="main-content">
+        <div class="settings-container">
+    <header class="settings-header">
+        <h1>VisiTrack Settings</h1>
+        <p>Manage your account and system configuration</p>
+    </header>
+
+    <form action="/update_profile" method ="POST" enctype ="multipart/form-data">
+
+    <div class="settings-grid">
+        <section class="settings-card">
+            <div class="card-header">
+                <div class="profile-pic-section">
+                            <div class="circle-preview" onclick="document.getElementById('profile-input').click();">
+                                <img src="{{ url_for('static', filename ='profiles/' + user.profile_img) 
+                                if user.profile_img else url_for('static', filename='images/Logo.png')}}" id="profile-display">
+                                <div class="camera-overlay"><i class="fa-solid fa-camera"></i></div>
+                            </div>
+                            <input type="file" id="profile-input" name="profile_img" accept="image/*" onchange="previewProfile(event)" hidden>
+                            <small>Tap to upload photo</small>
+                        </div>
+               
+                <h2>User Profile</h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name= "name" value="{{ user.name }}">
+                </div>
+
+                <div class="form-group">
+                   <label>Description (Bio)</label>
+                   <input type="text" name="description" value="{{ user.description or '' }}" placeholder="e.g. Senior Professor">
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select>
+                        <option {{ 'selected' if user.department == 'Comp. Engineering'}}>Comp. Engineering</option>
+                        <option {{ 'selected' if user.department == 'Mech. Engineering'}}>Mech. Engineering</option>
+                        <option {{ 'selected' if user.department == 'Civil Engineering'}}>Civil Engineering</option>
+                        <option {{ 'selected' if user.department == 'Electro. Engineering'}}>Electro. Engineering</option>
+                        <option {{ 'selected' if user.department == 'Ele. Engineering'}}>Elec. Engineering</option>
+                        <option {{ 'selected' if user.department == 'FAA. Engineering'}}>FAA. Engineering</option>
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label>Office Address</label>
+                    <textarea name="address" rows="2">{{ user.office_address or '' }}</textarea>
+                </div>
+                <div class="form-group"><label>Facebook Link</label><input type="text" name="facebook" value="{{ user.facebook_url or '' }}"></div>
+                <div class="form-group"><label>Twitter Link</label><input type="text" name="twitter" value="{{ user.twitter_url or '' }}"></div>
+                <div class="form-group"><label>Instagram Link</label><input type="text" name="instagram" value="{{ user.instagram_url or '' }}"></div>
+               
+
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <div class="card-header">
+                <i class="fas fa-desktop"></i>
+                <h2>System Configuration</h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Recognition Mode</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="mode" checked> High Accuracy</label>
+                        <label><input type="radio" name="mode"> High Speed</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Data Refresh Interval</label>
+                    <select>
+                        <option>5 Seconds</option>
+                        <option selected>15 Seconds</option>
+                        <option>1 Minute</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Storage Sync</label>
+                    <div class="toggle-container">
+                        <span>Auto-Cloud Backup</span>
+                        <input type="checkbox" checked>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Database Status</label>
+                    <span class="status-indicator online">Connected</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <div class="card-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Privacy & Security</h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Data Encryption</label>
+                    <select>
+                        <option>AES-256 (Default)</option>
+                        <option>RSA-4096</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Two-Factor Auth</label>
+                    <div class="toggle-container">
+                        <span>Enable SMS/Email OTP</span>
+                        <input type="checkbox">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <button class="btn-secondary">View Login Activity</button>
+                    <button class="btn-secondary">Clear Cache</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="settings-footer">
+        <button class="btn-cancel">Cancel Changes</button>
+        <button class="btn-save">Save Configuration</button>
+    </div>
+</form>
+    </div>
+
+
+    </div>
+
+            <script>
+            // Image box par click karne par file selector khulega
+                document.getElementById('imagePreview').addEventListener('click', function() {
+                    document.getElementById('fileInput').click();
+                });
+
+                // Image ka preview dikhane ke liye
+                function previewFile() {
+                    const preview = document.getElementById('profileDisplay');
+                    const file = document.getElementById('fileInput').files[0];
+                    const reader = new FileReader();
+
+                    reader.onloadend = function () {
+                        preview.src = reader.result;
+                    }
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = "default-avatar.png";
+                    }
+                }
+                function previewProfile(event) {
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const output = document.getElementById('profile-display');
+                        output.src = reader.result;
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+        </script>
+    
+
+
+    <!----JavaScript for media queries-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebar = document.getElementById('sidebar');
+                const menuOpen = document.getElementById('menuOpen');
+                const menuClose = document.getElementById('menuClose');
+
+                // Sidebar kholne ke liye
+                if(menuOpen) {
+                    menuOpen.addEventListener('click', () => {
+                        sidebar.classList.add('active');
+                    });
+                }
+
+                // Sidebar band karne ke liye
+                if(menuClose) {
+                    menuClose.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                }
+
+                // Sidebar ke bahar click karne par auto-close
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 1024) {
+                        if (!sidebar.contains(e.target) && !menuOpen.contains(e.target)) {
+                            sidebar.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        </script>
+</body>
+</html>

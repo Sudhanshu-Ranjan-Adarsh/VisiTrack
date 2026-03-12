@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisiTrack | Gallery Album</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="vt-gallery-container">
+                <nav class="legal-nav">
+                    <div class="legal-nav-content">
+                       <img src="{{url_for('static', filename='images/Full.png')}}" alt="Brand Logo" class="nav-logo">
+                       <a href="{{ url_for('home') }}" class="close-btn"><i class="fas fa-times"></i></a>
+                    </div>
+                </nav>
+    <header class="vt-gallery-header">
+        <h1>VisiTrack Insights Gallery</h1>
+        <p>Explore our interface and field operations.</p>
+    </header>
+
+    <div class="vt-gallery-grid">
+                
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/1.jpg')}}" alt="Dashboard Analytics">
+            <div class="vt-caption">Face Recognition</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800" alt="Data Tracking">
+            <div class="vt-caption">Data Points</div>
+        </div>
+
+        <div class="vt-gallery-item tall">
+            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800" alt="Field Survey">
+            <div class="vt-caption">Field Operations</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800" alt="Strategic Planning">
+            <div class="vt-caption">Strategic Analysis</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800" alt="Team Coordination">
+            <div class="vt-caption">Team Monitoring</div>
+        </div>
+
+        <div class="vt-gallery-item wide">
+            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800" alt="Server Room">
+            <div class="vt-caption">Cloud Infrastructure</div>
+        </div>
+        <div class="vt-gallery-item tall">
+            <img src="{{url_for('static', filename='images/G2.jpg')}}" alt="Field Survey">
+            <div class="vt-caption">Softwares</div>
+        </div>
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/G7.jpg')}}" alt="Team Coordination">
+            <div class="vt-caption">Design Process</div>
+        </div>
+        <div class="vt-gallery-item wide">
+            <img src="{{url_for('static', filename='images/V.jpg')}}" alt="Server Room">
+            <div class="vt-caption">Designing</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/S3.jpg')}}" alt="Dashboard Analytics">
+            <div class="vt-caption">Reporting</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/logo.png')}}" alt="Data Tracking">
+            <div class="vt-caption">Our Brand</div>
+        </div>
+
+        <div class="vt-gallery-item tall">
+            <img src="{{url_for('static', filename='images/Suhel.jpg')}}" alt="Field Survey">
+            <div class="vt-caption">Suhel Ansari</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/full-logo.png')}}" alt="Strategic Planning">
+            <div class="vt-caption">Brand Uniqueness</div>
+        </div>
+
+        <div class="vt-gallery-item">
+            <img src="{{url_for('static', filename='images/G8.jpg')}}" alt="Team Coordination">
+            <div class="vt-caption">Coding Vibe</div>
+        </div>
+        <div class="vt-gallery-item tall">
+            <img src="{{url_for('static', filename='images/Adarsh.jpg')}}" alt="Field Survey">
+            <div class="vt-caption">Adarsh Ranjan</div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
