@@ -12,6 +12,7 @@ VisiTrack is a web- based system designed to manages and track students attendan
 ## Versions:-
   * Version-1:- Older version, earlier code
   * Version-2:- Modern version, upgraded code
+  * Version-3:- Reliable functionality, more featured
 
 ## Build With:-
 - HTML 5
